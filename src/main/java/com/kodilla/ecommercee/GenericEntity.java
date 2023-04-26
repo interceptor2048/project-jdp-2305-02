@@ -10,13 +10,13 @@ public class GenericEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String value;
+    private String theValue;
 
     public GenericEntity() {
     }
 
-    public String getValue() {
-        return value;
+    public String getTheValue() {
+        return theValue;
     }
 
     public Long getId() {
@@ -24,8 +24,8 @@ public class GenericEntity {
         return id;
     }
 
-    public GenericEntity(String value) {
+    public GenericEntity(String theValue) {
 
-        this.value = value;
+        this.theValue = theValue;
     }
 }
