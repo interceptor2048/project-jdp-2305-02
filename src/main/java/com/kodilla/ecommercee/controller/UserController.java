@@ -11,7 +11,7 @@ import java.util.Random;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     //mock users data =========================
@@ -26,12 +26,12 @@ public class UserController {
     };
     //=========================================
 
-    @GetMapping("/getUsers")
+    @GetMapping()
     public ResponseEntity<List<UserDto>> getUsers() {
         return ResponseEntity.ok(userDtoList);
     }
 
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable("id") long id) {
         for (UserDto userDto : userDtoList) {
             if (userDto.getUserId() == id) {
@@ -41,7 +41,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/deleteUser/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") long id) {
         for (UserDto userDto : userDtoList) {
             if (userDto.getUserId() == id) {
@@ -64,7 +64,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping(path="/createUser", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
         userDtoList.add(userDto);
         return ResponseEntity.ok().build();
