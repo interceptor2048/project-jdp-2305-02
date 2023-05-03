@@ -1,7 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.domain.GroupDto;
-import lombok.RequiredArgsConstructor;
+import com.kodilla.ecommercee.dto.GroupDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/groups")
-@RequiredArgsConstructor
 @CrossOrigin("*")
 public class GroupController {
 
@@ -29,24 +27,25 @@ public class GroupController {
       return ResponseEntity.ok(groupDtoList);
     }
 
-    @GetMapping(value="{groupId}")
+    @GetMapping(value = "{groupId}")
     public ResponseEntity<GroupDto> getGroup(@PathVariable Long groupId){
         for (GroupDto group : groupDtoList) {
             if (group.getGroupId().equals(groupId)){
-                ResponseEntity.ok(group);
+                return ResponseEntity.ok(group);
             }
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping(value="{groupId}")
-    public void deleteGroup(@PathVariable Long groupId) {
+    @DeleteMapping(value = "{groupId}")
+    public ResponseEntity<Void> deleteGroup(@PathVariable Long groupId) {
         for (GroupDto group : groupDtoList) {
             if (group.getGroupId().equals(groupId)){
                 groupDtoList.remove(group);
-                ResponseEntity.ok().build();
+                return ResponseEntity.ok().build();
             }
         }
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -54,14 +53,15 @@ public class GroupController {
         for (GroupDto group : groupDtoList) {
             if (group.getGroupId().equals(groupDto.getGroupId())){
                 group.getName().replaceFirst(group.getName(), groupDto.getName());
+                return ResponseEntity.ok(groupDto);
             }
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createGroup(@RequestBody GroupDto groupDto) {
+    public ResponseEntity<Void> createGroup(@RequestBody GroupDto groupDto) {
         groupDtoList.add(groupDto);
-        ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
 }
