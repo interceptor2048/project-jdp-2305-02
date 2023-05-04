@@ -1,9 +1,12 @@
 package com.kodilla.ecommercee.controller;
 
 import com.kodilla.ecommercee.dto.OrderDto;
+import org.aspectj.weaver.ast.Or;
+import org.hibernate.criterion.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,29 +14,55 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
+
+    List<OrderDto> orderDtoList = new ArrayList<OrderDto>() {
+        {
+            add(new OrderDto(1L, 1L, 1L));
+        }
+    };
+
     @GetMapping
     public ResponseEntity<List<OrderDto>> getOrders() {
-        return ResponseEntity.ok(new ArrayList<>());
+        return ResponseEntity.ok(orderDtoList);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addOrder(@RequestBody OrderDto orderDto) {
+        orderDtoList.add(orderDto);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{orderId}")
     public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId) {
-        return ResponseEntity.ok(new OrderDto(1L, 1L, 1L));
+        for (OrderDto order : orderDtoList) {
+            if (order.getOrderId().equals(orderId)) {
+                return ResponseEntity.ok(order);
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping(path = "/{orderId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<OrderDto> updateOrder(@PathVariable Long orderId, @RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(new OrderDto(1L, 2L, 1L));
+        for (OrderDto order : orderDtoList) {
+            if (order.getOrderId().equals(orderId)) {
+                orderDtoList.remove(order);
+                orderDtoList.add(orderDto);
+                return ResponseEntity.ok(orderDto);
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{orderId}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
-        return ResponseEntity.ok().build();
+        for (OrderDto order : orderDtoList) {
+            if (order.getOrderId().equals(orderId)) {
+                orderDtoList.remove(order);
+                return ResponseEntity.ok().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
 

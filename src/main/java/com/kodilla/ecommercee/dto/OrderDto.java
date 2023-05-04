@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class OrderDto {
-
-    private long orderId;
-    private long userId;
-    private long cartId;
+    private Long orderId;
+    private Long userId;
+    private Long cartId;
 }
