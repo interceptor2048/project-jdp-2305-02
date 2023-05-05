@@ -48,11 +48,12 @@ public class GroupController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GroupDto> updateGroup(@RequestBody GroupDto groupDto) {
+    @PutMapping(value="{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<GroupDto> updateGroup(@PathVariable("id") Long id, @RequestBody GroupDto groupDto) {
         for (GroupDto group : groupDtoList) {
-            if (group.getGroupId().equals(groupDto.getGroupId())){
-                group.getName().replaceFirst(group.getName(), groupDto.getName());
+            if (id.equals(group.getGroupId())){
+                groupDtoList.remove(group);
+                groupDtoList.add(groupDto);
                 return ResponseEntity.ok(groupDto);
             }
         }
