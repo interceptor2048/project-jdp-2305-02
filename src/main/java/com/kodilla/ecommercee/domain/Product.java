@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Product {
     @Id
-    @NotNull
     @GeneratedValue
     @Column(unique = true)
     private Long id;
