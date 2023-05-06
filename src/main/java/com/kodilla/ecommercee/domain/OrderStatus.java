@@ -4,6 +4,4 @@ public enum OrderStatus {
     CREATED,
     PENDING,
     DONE
-
-
 }
