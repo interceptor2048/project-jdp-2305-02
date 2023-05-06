@@ -40,8 +40,12 @@ public class ProductController {
 
     @DeleteMapping(value = "{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
-        testProductList.removeIf(product -> product.getProductId().equals(productId));
-
+        for (ProductDto product : testProductList) {
+            if (product.getProductId().equals(productId)) {
+                testProductList.remove(product);
+                return ResponseEntity.ok().build();
+            }
+        }
         return ResponseEntity.notFound().build();
     }
 
