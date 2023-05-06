@@ -10,13 +10,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table
+@Table(name = "ORDERS")
 public class Order {
     @Id
     @GeneratedValue
-    @Column
     private Long orderId;
     @Enumerated(EnumType.STRING)
-    @Column
     private OrderStatus orderStatus;
 }
