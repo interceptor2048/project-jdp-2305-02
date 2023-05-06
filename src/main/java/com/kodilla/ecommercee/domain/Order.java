@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table
+@Table(name = "ORDERS")
 public class Order {
     @Id
     @GeneratedValue
