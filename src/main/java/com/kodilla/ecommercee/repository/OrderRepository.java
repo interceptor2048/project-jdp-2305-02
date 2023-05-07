@@ -1,4 +1,5 @@
 package com.kodilla.ecommercee.repository;
+
 import com.kodilla.ecommercee.domain.Order;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,10 +17,8 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     @Override
     Order save(Order order);
 
-    @Override
-    Optional<Order> findById(Long orderId);
+    Optional<Order> findByOrderId(Long orderId);
 
-    @Override
-    void deleteById(Long orderId);
+    void deleteByOrderId(Long orderId);
 
 }
