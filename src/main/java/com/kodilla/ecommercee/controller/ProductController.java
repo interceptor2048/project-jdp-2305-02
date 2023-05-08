@@ -31,7 +31,7 @@ public class ProductController {
     @GetMapping("{productId}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable Long productId) {
         for (ProductDto product : testProductList) {
-            if (product.getProductId().equals(productId)) {
+            if (product.getId().equals(productId)) {
                 return ResponseEntity.ok(product);
             }
         }
@@ -41,7 +41,7 @@ public class ProductController {
     @DeleteMapping(value = "{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
         for (ProductDto product : testProductList) {
-            if (product.getProductId().equals(productId)) {
+            if (product.getId().equals(productId)) {
                 testProductList.remove(product);
                 return ResponseEntity.ok().build();
             }
@@ -59,7 +59,7 @@ public class ProductController {
     @PutMapping(path = "{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDto> updateProduct(@PathVariable Long productId, @RequestBody ProductDto productNew) {
         for (ProductDto product : testProductList) {
-            if (product.getProductId().equals(productId)) {
+            if (product.getId().equals(productId)) {
                 testProductList.remove(product);
                 testProductList.add(productNew);
                 return ResponseEntity.ok(productNew);
