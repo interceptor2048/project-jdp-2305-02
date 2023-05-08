@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductDto {
 
-    private Long productId;
+    private Long Id;
     private String name;
     private String description;
     private BigDecimal price;
