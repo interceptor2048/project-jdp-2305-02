@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @NoArgsConstructor
@@ -22,4 +23,9 @@ public class Order {
 
     @OneToOne()
     private Cart cart;
+
+    public Order (Long orderId, OrderStatus orderStatus) {
+        this.orderId = orderId;
+        this.orderStatus = orderStatus;
+    }
 }

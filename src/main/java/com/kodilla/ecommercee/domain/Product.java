@@ -42,4 +42,11 @@ public class Product {
                     referencedColumnName = "cart_id")}
     )
     private List<Cart> cartList = new ArrayList<>();
+
+    public Product (Long id, String name, String description, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }
