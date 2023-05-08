@@ -52,7 +52,7 @@ public class CartController {
     }
 
     @PutMapping(value="{cartId}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CartDto> updateGroup(@PathVariable("id") Long id, @RequestBody CartDto cartDto) {
+    public ResponseEntity<CartDto> updateCart(@PathVariable("id") Long id, @RequestBody CartDto cartDto) {
         for (CartDto cart : CartDtoList) {
             if (id.equals(cart.getId())){
                 CartDtoList.remove(cart);
