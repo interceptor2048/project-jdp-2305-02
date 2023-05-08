@@ -86,12 +86,15 @@ public class UserRepositoryTestSuite {
     @Test
     void test_deleteUserById_ValidUser() {
         //Given
+        User tempUser = new User(null, "to be deleted", 1, 1111);
+        userRepository.save(tempUser);
+        Long tempId = tempUser.getId();
 
         //When
-        userRepository.deleteById(3L);
+        userRepository.deleteById(tempId);
 
         //Then
-        assertEquals(Optional.empty(), userRepository.findById(3L));
+        assertEquals(Optional.empty(), userRepository.findById(tempId));
     }
 
     @Test
