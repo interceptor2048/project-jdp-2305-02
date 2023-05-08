@@ -19,7 +19,23 @@ class ProductRepositoryTestSuite {
     ProductRepository productRepository;
 
     @Test
-    void testSaveRetrieveProduct() {
+    void testSaveProduct() {
+        //Given
+        Product product = new Product(null, "test name", "test description", new BigDecimal(100));
+
+        //When
+        productRepository.save(product);
+        Long id = product.getId();
+        Optional<Product> retrievedTestProduct = productRepository.findById(id);
+
+        //Then
+        Assertions.assertTrue(retrievedTestProduct.isPresent());
+
+        //CleanUp
+        productRepository.deleteById(id);
+    }
+    @Test
+    void testRetrieveProductWhenExists() {
         //Given
         Product product = new Product(null, "test name", "test description", new BigDecimal(100));
 
@@ -34,6 +50,16 @@ class ProductRepositoryTestSuite {
 
         //CleanUp
         productRepository.deleteById(id);
+    }
+    @Test
+    void testRetrieveProductWhenNotExists() {
+        //Given
+
+        //When
+        Optional<Product> retrievedTestProduct = productRepository.findById(1000L);
+
+        //Then
+        Assertions.assertFalse(retrievedTestProduct.isPresent());
     }
     @Test
     void testDeleteProduct() {
