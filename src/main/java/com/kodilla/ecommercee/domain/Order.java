@@ -19,4 +19,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus orderStatus;
+
+    @OneToOne()
+    private Cart cart;
 }
