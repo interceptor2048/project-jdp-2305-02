@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
+import com.kodilla.ecommercee.domain.OrderStatus;
 import com.kodilla.ecommercee.dto.OrderDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public class OrderController {
 
     List<OrderDto> orderDtoList = new ArrayList<OrderDto>() {
         {
-            add(new OrderDto(1L, 1L, 1L));
+            add(new OrderDto(1L, 1L, 1L, OrderStatus.PENDING));
         }
     };
 

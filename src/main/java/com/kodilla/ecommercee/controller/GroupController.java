@@ -27,20 +27,20 @@ public class GroupController {
       return ResponseEntity.ok(groupDtoList);
     }
 
-    @GetMapping(value = "{groupId}")
+    @GetMapping(value = "{id}")
     public ResponseEntity<GroupDto> getGroup(@PathVariable Long groupId){
         for (GroupDto group : groupDtoList) {
-            if (group.getGroupId().equals(groupId)){
+            if (group.getId().equals(groupId)){
                 return ResponseEntity.ok(group);
             }
         }
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping(value = "{groupId}")
+    @DeleteMapping(value = "{id}")
     public ResponseEntity<Void> deleteGroup(@PathVariable Long groupId) {
         for (GroupDto group : groupDtoList) {
-            if (group.getGroupId().equals(groupId)){
+            if (group.getId().equals(groupId)){
                 groupDtoList.remove(group);
                 return ResponseEntity.ok().build();
             }
@@ -49,9 +49,9 @@ public class GroupController {
     }
 
     @PutMapping(value="{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<GroupDto> updateGroup(@PathVariable("id") Long id, @RequestBody GroupDto groupDto) {
+    public ResponseEntity<GroupDto> updateGroup(@PathVariable("id") Long groupId, @RequestBody GroupDto groupDto) {
         for (GroupDto group : groupDtoList) {
-            if (id.equals(group.getGroupId())){
+            if (groupId.equals(group.getId())){
                 groupDtoList.remove(group);
                 groupDtoList.add(groupDto);
                 return ResponseEntity.ok(groupDto);
