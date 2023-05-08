@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable("id") long id) {
         for (UserDto userDto : userDtoList) {
-            if (userDto.getUserId() == id) {
+            if (userDto.getId() == id) {
                 return ResponseEntity.ok(userDto);
             }
         }
@@ -44,7 +44,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") long id) {
         for (UserDto userDto : userDtoList) {
-            if (userDto.getUserId() == id) {
+            if (userDto.getId() == id) {
                 userDtoList.remove(userDto);
                 return ResponseEntity.ok().build();
             }
@@ -55,7 +55,7 @@ public class UserController {
     @PutMapping(path="/updateUser/{id}", consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") long id, @RequestBody UserDto userDtoIn) {
         for (UserDto userDto : userDtoList) {
-            if (userDto.getUserId() == id) {
+            if (userDto.getId() == id) {
                 userDtoList.remove(userDto);
                 userDtoList.add(userDtoIn);
                 return ResponseEntity.ok(userDtoIn);
@@ -73,7 +73,7 @@ public class UserController {
     @PutMapping("/blockUser/{id}")
     public ResponseEntity<Void> blockUser(@PathVariable("id") long id) {
         for (UserDto userDto : userDtoList) {
-            if (userDto.getUserId() == id) {
+            if (userDto.getId() == id) {
                 if(userDto.getStatus()!=0) {
                     userDto.setStatus(0);
                     return ResponseEntity.ok().build();
@@ -88,7 +88,7 @@ public class UserController {
     @PutMapping("/generateKey/{id}")
     public ResponseEntity<Integer> generateKey(@PathVariable("id") long id) {
         for (UserDto userDto : userDtoList) {
-            if (userDto.getUserId() == id) {
+            if (userDto.getId() == id) {
                 Random random = new Random();
                 int key = random.nextInt(8999)+1000;
                 userDto.setUserKey(key);
@@ -97,6 +97,4 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
-
-
 }
