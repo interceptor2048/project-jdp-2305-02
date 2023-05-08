@@ -51,10 +51,10 @@ public class CartController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping(value="{cartId}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CartDto> updateCart(@PathVariable("id") Long id, @RequestBody CartDto cartDto) {
+    @PutMapping(path="{cartId}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CartDto> updateCart(@PathVariable Long cartId, @RequestBody CartDto cartDto) {
         for (CartDto cart : CartDtoList) {
-            if (id.equals(cart.getId())){
+            if (cart.getId().equals(cartId)) {
                 CartDtoList.remove(cart);
                 CartDtoList.add(cartDto);
                 return ResponseEntity.ok(cartDto);
