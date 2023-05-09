@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -24,8 +25,10 @@ public class Order {
     @OneToOne()
     private Cart cart;
 
-    @ManyToOne
-    private Order order;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "order")
+    private List<CartProducts> cartProducts;
 
     public Order (Long orderId, OrderStatus orderStatus) {
         this.orderId = orderId;

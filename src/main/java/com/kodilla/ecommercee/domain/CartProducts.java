@@ -27,13 +27,12 @@ public class CartProducts {
 
     @ManyToOne
     @JoinColumn(name = "cartId")
-    private Cart cartId;
+    private Cart cart;
 
     @Column(name = "quantity")
     private int quantity;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "order")
-    private List<Order> orders;
+    @ManyToOne
+    private Order order;
+
 }

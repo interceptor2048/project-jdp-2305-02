@@ -38,7 +38,7 @@ public class Product {
             mappedBy = "product",
             fetch = FetchType.LAZY
     )
-    private List<CartProducts> cartProducts = new ArrayList<>();
+    private List<CartProducts> cartProducts;
 
     public Product (Long id, String name, String description, BigDecimal price) {
         this.id = id;

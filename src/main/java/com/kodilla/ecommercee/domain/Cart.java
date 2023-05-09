@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -30,7 +28,8 @@ public class Cart {
     private Order order;
 
     @OneToMany(
+            targetEntity =  CartProducts.class,
             fetch = FetchType.LAZY,
-            mappedBy = "cartId")
+            mappedBy = "cart")
     private List<CartProducts> cartProducts;
 }
