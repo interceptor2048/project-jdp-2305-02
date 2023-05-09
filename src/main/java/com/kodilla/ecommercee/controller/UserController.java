@@ -60,7 +60,6 @@ public class UserController {
         }
     }
 
-    //!
     @PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
         Optional<User> user = userDbService.getUser(userDto.getId());

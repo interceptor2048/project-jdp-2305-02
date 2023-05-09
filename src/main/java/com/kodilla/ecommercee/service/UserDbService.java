@@ -27,8 +27,6 @@ public class UserDbService {
     }
 
     public void updateUser(User user) {
-        Long id = user.getId();
-        userRepository.deleteById(id);
         userRepository.save(user);
     }
 
