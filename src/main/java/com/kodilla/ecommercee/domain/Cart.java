@@ -19,16 +19,18 @@ public class Cart {
 
     @Id
     @GeneratedValue
-    @Column(name = "cart_id", unique = true)
+    @Column(name = "cartId", unique = true)
     private Long id;
 
     @OneToOne(mappedBy = "cart")
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     @OneToOne(mappedBy = "cart")
     private Order order;
 
-    @ManyToMany(mappedBy = "cartList")
-    private List<Product> listOfProducts  = new ArrayList<>();
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "cartId")
+    private List<CartProducts> cartProducts;
 }

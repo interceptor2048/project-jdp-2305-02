@@ -33,15 +33,12 @@ public class Product {
     private Group group;
     */
 
-    @ManyToMany
-    @JoinTable(
-            name="cartProducts",
-            joinColumns = {@JoinColumn(name = "product_id",
-                    referencedColumnName ="id")},
-            inverseJoinColumns = {@JoinColumn(name = "cart_id",
-                    referencedColumnName = "cart_id")}
+    @OneToMany(
+            targetEntity =  CartProducts.class,
+            mappedBy = "product",
+            fetch = FetchType.LAZY
     )
-    private List<Cart> cartList = new ArrayList<>();
+    private List<CartProducts> cartProducts = new ArrayList<>();
 
     public Product (Long id, String name, String description, BigDecimal price) {
         this.id = id;

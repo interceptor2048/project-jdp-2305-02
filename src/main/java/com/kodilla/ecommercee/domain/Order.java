@@ -24,6 +24,9 @@ public class Order {
     @OneToOne()
     private Cart cart;
 
+    @ManyToOne
+    private Order order;
+
     public Order (Long orderId, OrderStatus orderStatus) {
         this.orderId = orderId;
         this.orderStatus = orderStatus;
