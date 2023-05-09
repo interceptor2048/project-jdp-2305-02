@@ -5,6 +5,7 @@ import com.kodilla.ecommercee.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +26,15 @@ public class UserMapper {
                 user.getUsername(),
                 user.getStatus(),
                 user.getUserKey()
+        );
+    }
+
+    public UserDto mapToUserDto(final Optional<User> user) {
+        return new UserDto(
+                user.get().getId(),
+                user.get().getUsername(),
+                user.get().getStatus(),
+                user.get().getUserKey()
         );
     }
 
