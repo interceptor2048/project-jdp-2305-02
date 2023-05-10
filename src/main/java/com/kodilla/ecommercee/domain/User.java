@@ -39,4 +39,10 @@ public class User {
         this.status = status;
         this.userKey = userKey;
     }
+    public User (String username, int status, int userKey) {
+        this.username = username;
+        this.status = status;
+        this.userKey = userKey;
+    }
 }
+

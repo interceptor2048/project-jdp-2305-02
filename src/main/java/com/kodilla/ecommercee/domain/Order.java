@@ -1,8 +1,6 @@
 package com.kodilla.ecommercee.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,6 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
+@ToString
 @Table(name = "ORDERS")
 public class Order {
     @Id
@@ -21,9 +21,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus orderStatus;
-
-    @OneToOne()
+    @OneToOne
     private Cart cart;
+    @ManyToOne
+    private User user;
 
     @OneToMany(
             fetch = FetchType.LAZY,
@@ -31,7 +32,12 @@ public class Order {
     private List<CartProducts> cartProducts;
 
     public Order (Long orderId, OrderStatus orderStatus) {
-        this.orderId = orderId;
         this.orderStatus = orderStatus;
+    }
+
+    public Order(OrderStatus orderStatus, Cart cart, User user) {
+        this.orderStatus = orderStatus;
+        this.cart = cart;
+        this.user = user;
     }
 }
