@@ -29,4 +29,14 @@ public class User {
 
     @Column(name = "userKey")
     private int userKey;
+
+    @OneToOne()
+    private Cart cart;
+
+    public User (Long id, String username, int status, int userKey) {
+        this.id = id;
+        this.username = username;
+        this.status = status;
+        this.userKey = userKey;
+    }
 }
