@@ -1,9 +1,11 @@
 package com.kodilla.ecommercee.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -11,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Table(name = "ORDERS")
 public class Order {
     @Id
@@ -21,7 +22,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus orderStatus;
-    @OneToOne
+    @OneToOne()
     private Cart cart;
     @ManyToOne
     private User user;
@@ -31,7 +32,8 @@ public class Order {
             mappedBy = "order")
     private List<CartProducts> cartProducts;
 
-    public Order (Long orderId, OrderStatus orderStatus) {
+    public Order(Long orderId, OrderStatus orderStatus) {
+        this.orderId = orderId;
         this.orderStatus = orderStatus;
     }
 
