@@ -18,9 +18,7 @@ public class ProductService {
         return repository.findAll();
     }
     public Product getProduct(Long id) {
-        return getAllProducts().stream()
-                .filter(product -> product.getId() == id)
-                .findAny().orElse(null);
+        return repository.findById(id).orElse(null);
     }
     public Product saveProduct(final Product product) {
         return repository.save(product);

@@ -10,14 +10,14 @@ import java.util.List;
 @AllArgsConstructor
 public class ProductDto {
 
-    private Long productId;
+    private Long id;
     private String name;
     private String description;
     private BigDecimal price;
     private Long groupId;
 
-    public ProductDto(Long productId, String name, String description, BigDecimal price) {
-        this.productId = productId;
+    public ProductDto(Long id, String name, String description, BigDecimal price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;

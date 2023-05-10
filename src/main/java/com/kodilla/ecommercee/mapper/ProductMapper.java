@@ -17,7 +17,7 @@ public class ProductMapper {
 
     public Product mapToProduct(final ProductDto productDto) {
         return new Product(
-                productDto.getProductId(),
+                productDto.getId(),
                 productDto.getName(),
                 productDto.getDescription(),
                 productDto.getPrice()
