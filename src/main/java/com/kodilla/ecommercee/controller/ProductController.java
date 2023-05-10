@@ -63,4 +63,14 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping(path = "{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductDto> updateAndNewProduct(@PathVariable Long productId, @RequestBody ProductDto newProductDto) {
+        if (productService.getProduct(productId) != null) {
+            productService.deleteById(productId);
+            productService.saveProduct(productMapper.mapToProduct(newProductDto));
+            return ResponseEntity.ok(newProductDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
