@@ -31,5 +31,9 @@ public class Product {
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "groupId")
 //    private Group group;
-
+    public Product(String name, String description, BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }

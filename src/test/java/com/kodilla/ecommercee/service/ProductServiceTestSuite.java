@@ -2,6 +2,7 @@ package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.domain.Product;
+import com.kodilla.ecommercee.exception.ProductNotFoundException;
 import com.kodilla.ecommercee.repository.GroupRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -85,10 +86,10 @@ class ProductServiceTestSuite {
     @Test
     void testGetProductThatNotExists() {
         //Given & When
-        Product retrievedProduct = productService.getProduct(id3+1000);
+        Long notExistingProductId = id3+9999;
 
         //Then
-        assertEquals(null, retrievedProduct);
+        assertThrows(ProductNotFoundException.class, () -> productService.getProduct(notExistingProductId));
     }
     @Test
     void testSaveProduct() {
@@ -119,7 +120,7 @@ class ProductServiceTestSuite {
     void testDeleteById() {
         //Given
         Product product5 = new Product(
-                null, "test to delete",
+                "test to delete",
                 "product desc. testing delete method",
                 new BigDecimal(230)
         );
@@ -128,16 +129,8 @@ class ProductServiceTestSuite {
 
         //When
         productService.deleteById(id5);
-        Optional retrievedProduct = Optional.ofNullable(productService.getProduct(id5));
 
         //Then
-        assertFalse(retrievedProduct.isPresent());
-
-        //CleanUp
-        try {
-            productService.deleteById(id5);
-        } catch (Exception e) {
-
-        }
+        assertThrows(ProductNotFoundException.class, () -> productService.getProduct(id5));
     }
 }
