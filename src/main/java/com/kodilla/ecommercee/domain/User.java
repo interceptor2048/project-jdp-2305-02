@@ -32,11 +32,11 @@ public class User {
     @Column(name = "userKey")
     private int userKey;
 
-    public void blockUser() {
-        this.status = 0;
-    }
-
-    public void unblockUser() {
-        this.status = 1;
+    public void switchBlockade() {
+        if(this.status == 0) {
+            this.status = 1;
+        } else {
+            this.status = 0;
+        };
     }
 }

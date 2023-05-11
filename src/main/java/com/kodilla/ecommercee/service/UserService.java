@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class UserDbService {
+public class UserService {
 
     private final UserRepository userRepository;
 
@@ -18,8 +19,8 @@ public class UserDbService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUser(Long id) {
-        return userRepository.findById(id);
+    public User getUser(Long id) {
+        return userRepository.findById(id).get();
     }
 
     public void deleteUser(Long id) {
@@ -28,6 +29,21 @@ public class UserDbService {
 
     public void updateUser(User user) {
         userRepository.save(user);
+    }
+
+    public void switchBlockade(Long id) {
+        User user = getUser(id);
+        user.switchBlockade();
+        userRepository.save(user);
+    }
+
+    public Integer generateKey(Long id) {
+        Random random = new Random();
+        int key = random.nextInt(8999) + 1000;
+        User user = getUser(id);
+        user.setUserKey(key);
+        userRepository.save(user);
+        return key;
     }
 
     public User createUser(User user) {
