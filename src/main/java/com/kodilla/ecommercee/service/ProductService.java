@@ -24,7 +24,11 @@ public class ProductService {
     public Product saveProduct(final Product product) {
         return repository.save(product);
     }
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws ProductNotFoundException {
+        checkIfProductExists(id);
         repository.deleteById(id);
+    }
+    public void checkIfProductExists(Long id) throws ProductNotFoundException {
+        repository.findById(id).orElseThrow(ProductNotFoundException::new);
     }
 }

@@ -31,7 +31,7 @@ public class ProductController {
         return ResponseEntity.ok(productMapper.mapToProductDto(productService.getProduct(productId)));
     }
     @DeleteMapping(value = "{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) throws ProductNotFoundException {
         productService.deleteById(productId);
         return ResponseEntity.ok().build();
     }
@@ -41,14 +41,16 @@ public class ProductController {
         productService.saveProduct(product);
         return ResponseEntity.ok().build();
     }
-    @PatchMapping(path = "{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long productId, @RequestBody ProductDto newProductDto) {
-        Product newProduct = productMapper.mapToProduct(newProductDto);
-        productService.saveProduct(newProduct);
-        return ResponseEntity.ok(productMapper.mapToProductDto(newProduct));
+    @PatchMapping(path = "{productToUpdateId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long productToUpdateId, @RequestBody ProductDto updatedProductDto) throws ProductNotFoundException {
+        productService.checkIfProductExists(productToUpdateId);
+        Product productToUpdate = productMapper.mapToProduct(updatedProductDto);
+        productService.saveProduct(productToUpdate);
+        return ResponseEntity.ok(productMapper.mapToProductDto(productToUpdate));
     }
     @PutMapping(path = "{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductDto> updateAndNewProduct(@PathVariable Long productId, @RequestBody ProductDto newProductDto) {
+    public ResponseEntity<ProductDto> updateAndNewProduct(@PathVariable Long productId, @RequestBody ProductDto newProductDto) throws ProductNotFoundException {
+        productService.checkIfProductExists(productId);
         productService.deleteById(productId);
         Product newProduct = productMapper.mapToProduct(newProductDto);
         productService.saveProduct(newProduct);
