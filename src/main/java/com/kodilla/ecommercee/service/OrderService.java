@@ -23,7 +23,6 @@ public class OrderService {
     }
 
     public void createOrder(OrderDto orderDto) {
-        orderDto.setOrderStatus(OrderStatus.CREATED);
         orderRepository.save(orderMapper.mapToOrder(orderDto));
     }
 

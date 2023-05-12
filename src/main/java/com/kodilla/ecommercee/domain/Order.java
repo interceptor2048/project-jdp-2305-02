@@ -1,9 +1,6 @@
 package com.kodilla.ecommercee.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Table(name = "ORDERS")
 public class Order {
     @Id
@@ -40,6 +38,5 @@ public class Order {
     public Order(OrderStatus orderStatus, Cart cart, User user) {
         this.orderStatus = orderStatus;
         this.cart = cart;
-        this.user = user;
     }
 }

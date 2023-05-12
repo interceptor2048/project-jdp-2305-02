@@ -1,5 +1,4 @@
 package com.kodilla.ecommercee.mapper;
-
 import com.kodilla.ecommercee.domain.Order;
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.repository.CartRepository;
@@ -8,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -22,9 +22,9 @@ public class OrderMapper {
         return new Order(
                 orderDto.getOrderId(),
                 orderDto.getOrderStatus(),
-                null,
-                null,
-               null
+                cartRepository.findById(orderDto.getCartId()).orElseThrow(() -> new RuntimeException("cart not found")),
+                userRepository.findById(orderDto.getUserId()).orElseThrow(() -> new RuntimeException("user notfound")),
+                cartRepository.findById(orderDto.getCartId()).orElseThrow(() -> new RuntimeException("cart not found")).getCartProducts()
         );
     }
 

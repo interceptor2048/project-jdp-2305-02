@@ -6,6 +6,7 @@ import com.kodilla.ecommercee.domain.OrderStatus;
 import com.kodilla.ecommercee.domain.User;
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.mapper.OrderMapper;
+import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -16,10 +17,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +34,10 @@ class OrderServiceTest {
     private OrderService orderService;
     @Mock
     private OrderRepository orderRepository;
+    @Mock
+    private CartRepository cartRepository;
+    @Mock
+    private UserRepository userRepository;
     @InjectMocks
     private OrderMapper orderMapper;
 
@@ -47,9 +50,9 @@ class OrderServiceTest {
         list = new ArrayList<>();
         order = new Order(1L, OrderStatus.DONE);
         list.add(order);
+        orderMapper = new OrderMapper(userRepository,cartRepository);
         orderService = new OrderService(orderRepository, orderMapper);
     }
-
     @AfterEach
     void tearDown() {
     }
@@ -71,8 +74,10 @@ class OrderServiceTest {
         //Given
         User user = new User(1L, "asd", 1, 1);
         Cart cart = new Cart(user, null);
-        Order order = new Order(OrderStatus.CREATED, cart, user);
-        OrderDto orderDto = orderMapper.mapToOrderDto(order);
+        OrderDto orderDto = new OrderDto(1L,1L,1L,OrderStatus.CREATED);
+        order.setOrderId(1L);
+        when(cartRepository.findById(orderDto.getCartId())).thenReturn(Optional.of(cart));
+        when(userRepository.findById(orderDto.getUserId())).thenReturn(Optional.of(user));
 
 
         //When
@@ -83,6 +88,7 @@ class OrderServiceTest {
 
         //Then
         assertThat(capturedOrder.getOrderId()).isEqualTo(orderDto.getOrderId());
+        assertThat(capturedOrder.getUser().getId()).isEqualTo(user.getId());
         assertThat(capturedOrder.getOrderStatus()).isEqualTo(OrderStatus.CREATED);
     }
 
