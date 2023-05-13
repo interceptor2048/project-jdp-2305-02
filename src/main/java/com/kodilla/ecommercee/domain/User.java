@@ -31,21 +31,24 @@ public class User {
     @Column(name = "status")
     private int status;
 
-    @Column(name = "user_Key")
+    @Column(name = "user_key")
     private int userKey;
-
+  
     @Column(name = "key_expiration_time")
     private LocalDateTime keyExpirationTime;
 
+    @OneToOne()
+    private Cart cart;
+  
     public void switchBlockade() {
         if(this.status == 0) {
             this.status = 1;
         } else {
             this.status = 0;
         }
-    }
+    }  
 
-    public User(Long id, String username, int status, int userKey) {
+    public User (Long id, String username, int status, int userKey) {
         this.id = id;
         this.username = username;
         this.status = status;
