@@ -20,14 +20,15 @@ public class Cart {
     @Column(name = "cartId", unique = true)
     private Long id;
 
-    @OneToOne(mappedBy = "cart")
+    @OneToOne(mappedBy = "cart", cascade = CascadeType.PERSIST)
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToOne(mappedBy = "cart")
+    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private Order order;
 
     @OneToMany(
+            cascade = CascadeType.PERSIST,
             targetEntity =  CartProducts.class,
             fetch = FetchType.LAZY,
             mappedBy = "cart")
