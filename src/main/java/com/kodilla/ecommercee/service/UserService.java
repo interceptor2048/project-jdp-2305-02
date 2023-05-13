@@ -1,12 +1,13 @@
 package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.domain.User;
+import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -19,29 +20,39 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(Long id) {
-        return userRepository.findById(id).get();
+    public User getUser(Long id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public void deleteUser(Long id) throws UserNotFoundException {
+        if(userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
+        } else {
+            throw new UserNotFoundException();
+        }
     }
 
-    public void updateUser(User user) {
-        userRepository.save(user);
+    public void updateUser(Long id, User user) throws UserNotFoundException {
+        if(userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
+            userRepository.save(user);
+        } else {
+            throw new UserNotFoundException();
+        }
     }
 
-    public void switchBlockade(Long id) {
+    public void switchBlockade(Long id) throws UserNotFoundException {
         User user = getUser(id);
         user.switchBlockade();
         userRepository.save(user);
     }
 
-    public Integer generateKey(Long id) {
+    public Integer generateKey(Long id) throws UserNotFoundException {
+        User user = getUser(id);
         Random random = new Random();
         int key = random.nextInt(8999) + 1000;
-        User user = getUser(id);
         user.setUserKey(key);
+        user.setKeyExpirationTime(LocalDateTime.now().plusHours(1));
         userRepository.save(user);
         return key;
     }
