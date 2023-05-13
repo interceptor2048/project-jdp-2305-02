@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -19,4 +21,17 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus orderStatus;
+
+    @OneToOne()
+    private Cart cart;
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "order")
+    private List<CartProducts> cartProducts;
+
+    public Order (Long orderId, OrderStatus orderStatus) {
+        this.orderId = orderId;
+        this.orderStatus = orderStatus;
+    }
 }

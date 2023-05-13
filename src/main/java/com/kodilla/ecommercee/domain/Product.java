@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity (name = "products")
 @Getter
@@ -27,13 +29,9 @@ public class Product {
     @Column
     private BigDecimal price;
 
-    //TODO: when Group entity implemented
+//    TODO: when Group entity implemented
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "groupId")
 //    private Group group;
     public Product(String name, String description, BigDecimal price) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
 }
