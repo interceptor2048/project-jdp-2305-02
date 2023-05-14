@@ -47,7 +47,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Integer generateKey(Long id) throws UserNotFoundException {
+    public Integer generateKey(Long id)  {
         User user = getUser(id);
         Random random = new Random();
         int key = random.nextInt(8999) + 1000;
