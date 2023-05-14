@@ -20,16 +20,15 @@ public class CartRepositoryTestSuite {
     @Autowired
     CartRepository repository;
 
-    List<CartProducts> cartProducts;
-    Cart cart1 = new Cart(1L, new User(), new Order(), new ArrayList<>());
-    Cart cart2 = new Cart(2L, new User(), new Order(), new ArrayList<>());
-    Cart cart3 = new Cart(3L, new User(), new Order(), new ArrayList<>());
-    Long id1;
-    Long id2;
-    Long id3;
-
-    @BeforeEach
-    void setUp() {
+    @Test
+    void testFindAll() {
+        //Given
+        Cart cart1 = new Cart();
+        Cart cart2 = new Cart();
+        Cart cart3 = new Cart();
+        Long id1;
+        Long id2;
+        Long id3;
         repository.save(cart1);
         repository.save(cart2);
         repository.save(cart3);
@@ -37,35 +36,17 @@ public class CartRepositoryTestSuite {
         id2 = cart2.getId();
         id3 = cart3.getId();
 
-    }
-    @AfterEach
-    void cleanUp() {
-        try {
-            repository.deleteById(id1);
-        } catch (Exception e) {
-
-        }
-        try {
-            repository.deleteById(id2);
-        } catch (Exception e) {
-
-        }
-        try {
-            repository.deleteById(id3);
-        } catch (Exception e) {
-
-        }
-    }
-    @Test
-    void testFindAll() {
-        //Given
-
         //When
         List<Cart> carts = repository.findAll();
 
         //Then
 //        Assertions.assertEquals(3, carts.size());
         Assertions.assertTrue(carts.size() >= 3);
+
+        //CleanUp
+        repository.deleteById(id1);
+        repository.deleteById(id2);
+        repository.deleteById(id3);
     }
     @Test
     void testSave() {
