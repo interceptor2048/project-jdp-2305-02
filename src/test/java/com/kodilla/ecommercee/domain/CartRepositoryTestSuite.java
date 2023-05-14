@@ -20,10 +20,10 @@ public class CartRepositoryTestSuite {
     @Autowired
     CartRepository repository;
 
-    List<CartProducts> cartProducts = new ArrayList<>();
-    Cart cart1 = new Cart(1L, new User(), new Order(), cartProducts);
-    Cart cart2 = new Cart(2L, new User(), new Order(), cartProducts);
-    Cart cart3 = new Cart(3L, new User(), new Order(), cartProducts);
+    List<CartProducts> cartProducts;
+    Cart cart1 = new Cart(1L, new User(), new Order(), new ArrayList<>());
+    Cart cart2 = new Cart(2L, new User(), new Order(), new ArrayList<>());
+    Cart cart3 = new Cart(3L, new User(), new Order(), new ArrayList<>());
     Long id1;
     Long id2;
     Long id3;
@@ -36,6 +36,7 @@ public class CartRepositoryTestSuite {
         id1 = cart1.getId();
         id2 = cart2.getId();
         id3 = cart3.getId();
+
     }
     @AfterEach
     void cleanUp() {
