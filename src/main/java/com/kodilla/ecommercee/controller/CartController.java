@@ -1,71 +1,71 @@
 package com.kodilla.ecommercee.controller;
 
 
+import com.kodilla.ecommercee.domain.Cart;
+import com.kodilla.ecommercee.domain.Item;
+import com.kodilla.ecommercee.domain.Order;
+import com.kodilla.ecommercee.domain.User;
 import com.kodilla.ecommercee.dto.CartDto;
+import com.kodilla.ecommercee.exception.UserNotFoundException;
+import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.service.CartService;
+import com.kodilla.ecommercee.service.ItemService;
+import com.kodilla.ecommercee.service.OrderService;
+import com.kodilla.ecommercee.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
+@RequiredArgsConstructor
 @RestController
-@CrossOrigin("*")
-@RequestMapping("/carts")
+@RequestMapping("/v1/cart")
 public class CartController {
 
-    List<CartDto> CartDtoList = new ArrayList<CartDto>(){
-        {
-            add(new CartDto(1L, "kurtka zimowa", "Pellentesque tempus interdum quam ut rhoncus. Donec...", new BigDecimal(100), 1L));
-            add(new CartDto(2L, "płaszcz", "Pellentesque tempus interdum quam ut rhoncus. Donec...", new BigDecimal(150), 1L));
-            add(new CartDto(8L,"krawat", "Pellentesque tempus interdum quam ut rhoncus. Donec...", new BigDecimal(50), 2L));
+    private final CartMapper cartMapper;
 
-        }
-    };
+    private final CartService cartDbService;
 
-    @GetMapping
-    public ResponseEntity<List<CartDto>> getCart(){
-        return ResponseEntity.ok(CartDtoList);
+    private final ItemService itemDbService;
+
+    private final UserService userDbService;
+
+    private final OrderService orderDbService;
+
+    @PostMapping(value = "createCart", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createCart(@RequestBody CartDto cartDto) {
+        cartDbService.save(cartMapper.mapToCart(cartDto));
     }
 
-    @GetMapping(value = "{cartId}")
-    public ResponseEntity<CartDto> getCart(@PathVariable Long cartId){
-        for (CartDto cart : CartDtoList) {
-            if (cart.getId().equals(cartId)){
-                return ResponseEntity.ok(cart);
-            }
-        }
-        return ResponseEntity.notFound().build();
+    @GetMapping(value = "getCart")
+    public CartDto getCart(@RequestParam long cartId) {
+        return cartMapper.mapToCartDto(cartDbService.getCartById(cartId));
     }
 
-    @DeleteMapping(value = "{cartId}")
-    public ResponseEntity<Void> deleteCart(@PathVariable Long cartId) {
-        for (CartDto cart : CartDtoList) {
-            if (cart.getId().equals(cartId)){
-                CartDtoList.remove(cart);
-                return ResponseEntity.ok().build();
-            }
-        }
-        return ResponseEntity.notFound().build();
+    @PutMapping(value = "addItemToCart")
+    public CartDto addItemToCart1(@RequestParam long cartId, @RequestParam long itemId) {
+        Item item = itemDbService.getItem(itemId);
+        Cart cart = cartDbService.getCartById(cartId);
+        cart.getItems().add(item);
+        cartDbService.save(cart);
+        return cartMapper.mapToCartDto(cart);
     }
 
-    @PutMapping(path="{cartId}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CartDto> updateCart(@PathVariable Long cartId, @RequestBody CartDto cartDto) {
-        for (CartDto cart : CartDtoList) {
-            if (cart.getId().equals(cartId)) {
-                CartDtoList.remove(cart);
-                CartDtoList.add(cartDto);
-                return ResponseEntity.ok(cartDto);
-            }
-        }
-        return ResponseEntity.notFound().build();
+    @DeleteMapping(value = "deleteItemFromCart")
+    public void deleteItemFromCart(@RequestParam long cartId, @RequestParam long itemId) {
+        Item item = itemDbService.getItem(itemId);
+        Cart cart = cartDbService.getCartById(cartId);
+        cart.getItems().remove(item);
+        cartDbService.save(cart);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createCart(@RequestBody CartDto cartDto) {
-        CartDtoList.add(cartDto);
-        return ResponseEntity.ok().build();
+    @PostMapping(value = "createOrder")
+    public void createOrder(@RequestParam Long userId, @RequestParam Long cartId) throws UserNotFoundException {
+        Cart cart = cartDbService.getCartById(cartId);
+        User user = userDbService.getUserById(userId).orElseThrow(UserNotFoundException::new);
+        Order order = new Order();
+        order.setCart(cart);
+        order.setUser(user);
+
     }
 }

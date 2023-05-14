@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +48,8 @@ public class OrderService {
         if (!orderRepository.existsById(orderId)) {
             throw new OrderNotFoundException("Order with id " + orderId + " not Found");
         }
+    }
+    public Optional<Order> getOrderById(final Long orderId) {
+        return orderRepository.findById(orderId);
     }
 }
