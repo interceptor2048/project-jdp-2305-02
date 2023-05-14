@@ -32,7 +32,7 @@ public class UserService {
         }
     }
 
-    public void updateUser(Long id, User user) throws UserNotFoundException {
+    public void updateUser(Long id, User user)  {
         if(userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
             userRepository.save(user);
