@@ -24,7 +24,7 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public void deleteUser(Long id) throws UserNotFoundException {
+    public void deleteUser(Long id)  {
         if(userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
         } else {
