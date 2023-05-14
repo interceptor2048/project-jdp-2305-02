@@ -32,7 +32,7 @@ public class User {
     @Column(name = "userKey")
     private int userKey;
 
-    @OneToOne()
+    @OneToOne
     private Cart cart;
 
     public User (Long id, String username, int status, int userKey) {

@@ -24,12 +24,13 @@ public class Order {
     @Column
     private OrderStatus orderStatus;
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "order")
+            mappedBy = "order",
+            cascade = CascadeType.ALL)
     private List<CartProducts> cartProducts;
 
     public Order (Long orderId, OrderStatus orderStatus) {
