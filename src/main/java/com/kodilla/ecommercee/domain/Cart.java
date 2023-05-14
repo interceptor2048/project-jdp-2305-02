@@ -26,10 +26,17 @@ public class Cart {
 
     @OneToOne(mappedBy = "cart")
     private Order order;
-
     @OneToMany(
             targetEntity =  CartProducts.class,
             fetch = FetchType.LAZY,
             mappedBy = "cart")
     private List<CartProducts> cartProducts;
+
+    public Cart(User user, List<CartProducts> cartProducts) {
+        this.user = user;
+        this.cartProducts = cartProducts;
+    }
+
+
 }
+
