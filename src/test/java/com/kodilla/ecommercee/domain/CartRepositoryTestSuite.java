@@ -20,10 +20,9 @@ public class CartRepositoryTestSuite {
     @Autowired
     CartRepository repository;
 
-    List<CartProducts> cartProducts = new ArrayList<>();
-    Cart cart1 = new Cart(1L, new User(), new Order(), cartProducts);
-    Cart cart2 = new Cart(2L, new User(), new Order(), cartProducts);
-    Cart cart3 = new Cart(3L, new User(), new Order(), cartProducts);
+    Cart cart1 = new Cart(1L, new User(), new Order(), new ArrayList<CartProducts>());
+    Cart cart2 = new Cart(2L, new User(), new Order(), new ArrayList<CartProducts>());
+    Cart cart3 = new Cart(3L, new User(), new Order(), new ArrayList<CartProducts>());
     Long id1;
     Long id2;
     Long id3;
