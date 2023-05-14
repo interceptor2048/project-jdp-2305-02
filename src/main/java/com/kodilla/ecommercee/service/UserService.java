@@ -41,7 +41,7 @@ public class UserService {
         }
     }
 
-    public void switchBlockade(Long id) throws UserNotFoundException {
+    public void switchBlockade(Long id)  {
         User user = getUser(id);
         user.switchBlockade();
         userRepository.save(user);
