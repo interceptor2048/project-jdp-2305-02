@@ -20,15 +20,16 @@ public class Cart {
     @Column(name = "cartId", unique = true)
     private Long id;
 
-    @OneToOne(mappedBy = "cart")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToOne(mappedBy = "cart")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")
     private Order order;
     @OneToMany(
             targetEntity =  CartProducts.class,
             fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
             mappedBy = "cart")
     private List<CartProducts> cartProducts;
 
@@ -36,7 +37,5 @@ public class Cart {
         this.user = user;
         this.cartProducts = cartProducts;
     }
-
-
 }
 
