@@ -20,14 +20,15 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus orderStatus;
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;
     @ManyToOne
     private User user;
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "order")
+            mappedBy = "order",
+            cascade = CascadeType.ALL)
     private List<CartProducts> cartProducts;
 
     public Order(Long orderId, OrderStatus orderStatus) {
