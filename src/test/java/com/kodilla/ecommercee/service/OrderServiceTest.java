@@ -73,7 +73,7 @@ class OrderServiceTest {
     void createOrder() {
         //Given
         User user = new User(1L, "asd", 1, 1);
-        Cart cart = new Cart(cartDto.getCartId(), user, order, null);
+        Cart cart = new Cart(1L, user, order, null);
         OrderDto orderDto = new OrderDto(1L,1L,1L,OrderStatus.CREATED);
         order.setOrderId(1L);
         when(cartRepository.findById(orderDto.getCartId())).thenReturn(Optional.of(cart));

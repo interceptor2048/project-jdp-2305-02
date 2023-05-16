@@ -16,36 +16,24 @@ import java.util.List;
 @Entity(name = "carts")
 public class Cart {
 
+
+    @SequenceGenerator(
+            name = "cart_sequence",
+            sequenceName = "cart_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            generator = "cart_sequence",
+            strategy = GenerationType.SEQUENCE)
     @Id
-    @GeneratedValue
-    @Column(name = "cartId", unique = true)
     private Long id;
-
-
-
     @OneToOne(mappedBy = "cart")
     @JoinColumn(name = "userId")
     private User user;
 
     @OneToOne(mappedBy = "cart")
     private Order order;
-    @OneToMany(
-            targetEntity =  CartProducts.class,
-            fetch = FetchType.LAZY,
-            mappedBy = "cart")
-    private List<CartProducts> cartProducts;
-
-    public Cart(Long cartId, User user, Order order, List<CartProducts> cartProducts) {
-        this.user = user;
-        this.cartProducts = cartProducts;
-    }
-    @OneToMany(
-            targetEntity = Item.class,
-            mappedBy = "cart",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Item> items = new ArrayList<>();
-
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "CART_PRODUCTS")
+    private List<Product> cartProducts;
 }

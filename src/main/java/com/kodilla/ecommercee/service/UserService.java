@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,9 +59,5 @@ public class UserService {
 
     public User createUser(User user) {
         return userRepository.save(user);
-    }
-
-    public Optional<User> getUserById(final Long userId) {
-        return userRepository.findById(userId);
     }
 }

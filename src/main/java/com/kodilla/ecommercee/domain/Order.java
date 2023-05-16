@@ -25,10 +25,10 @@ public class Order {
     @ManyToOne
     private User user;
 
-    @OneToMany(
+    @ManyToMany(
             fetch = FetchType.LAZY,
             mappedBy = "order")
-    private List<CartProducts> cartProducts;
+    private List<Product> cartProducts;
 
     public Order(Long orderId, OrderStatus orderStatus) {
         this.orderId = orderId;

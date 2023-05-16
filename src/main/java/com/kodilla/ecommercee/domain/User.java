@@ -20,7 +20,7 @@ public class User {
     @Id
     @NotNull
     @GeneratedValue
-    @Column(name = "user_key")
+    @Column(name = "id", unique = true)
     private Long id;
 
     @NotNull
@@ -63,3 +63,4 @@ public class User {
         this.keyExpirationTime = keyExpirationTime;
     }
 }
+

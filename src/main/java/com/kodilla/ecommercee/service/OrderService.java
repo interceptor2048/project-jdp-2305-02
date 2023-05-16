@@ -49,7 +49,6 @@ public class OrderService {
             throw new OrderNotFoundException("Order with id " + orderId + " not Found");
         }
     }
-    public Optional<Order> getOrderById(final Long orderId) {
-        return orderRepository.findById(orderId);
-    }
+
+
 }
