@@ -17,15 +17,8 @@ import java.util.List;
 public class Cart {
 
 
-    @SequenceGenerator(
-            name = "cart_sequence",
-            sequenceName = "cart_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "cart_sequence",
-            strategy = GenerationType.SEQUENCE)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(mappedBy = "cart")
     @JoinColumn(name = "userId")
