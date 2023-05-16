@@ -20,16 +20,16 @@ public class Cart {
     @Column(name = "cartId", unique = true)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "cart")
+    @OneToOne(mappedBy = "cart", cascade = CascadeType.PERSIST)
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cart")
+    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private Order order;
     @OneToMany(
+            cascade = CascadeType.PERSIST,
             targetEntity =  CartProducts.class,
             fetch = FetchType.LAZY,
-            cascade = CascadeType.PERSIST,
             mappedBy = "cart")
     private List<CartProducts> cartProducts;
 
@@ -37,5 +37,6 @@ public class Cart {
         this.user = user;
         this.cartProducts = cartProducts;
     }
-}
 
+
+}
