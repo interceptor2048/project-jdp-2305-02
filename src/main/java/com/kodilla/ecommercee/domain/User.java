@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Table(name = "users")
 public class User {
+
     @Id
     @NotNull
     @GeneratedValue
@@ -29,16 +31,36 @@ public class User {
     @Column(name = "status")
     private int status;
 
-    @Column(name = "userKey")
+    @Column(name = "user_key")
     private int userKey;
 
-    @OneToOne
+    @Column(name = "key_expiration_time")
+    private LocalDateTime keyExpirationTime;
+
+    @OneToOne()
     private Cart cart;
 
-    public User (Long id, String username, int status, int userKey) {
+    public void switchBlockade() {
+        if(this.status == 0) {
+            this.status = 1;
+        } else {
+            this.status = 0;
+        }
+    }
+
+    public User(Long id, String username, int status, int userKey) {
         this.id = id;
         this.username = username;
         this.status = status;
         this.userKey = userKey;
     }
+
+    public User(Long id, String username, int status, int userKey,  LocalDateTime keyExpirationTime) {
+        this.id = id;
+        this.username = username;
+        this.status = status;
+        this.userKey = userKey;
+        this.keyExpirationTime = keyExpirationTime;
+    }
 }
+

@@ -1,70 +1,59 @@
 package com.kodilla.ecommercee.controller;
 
+import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.dto.ProductDto;
+import com.kodilla.ecommercee.exception.ProductNotFoundException;
+import com.kodilla.ecommercee.mapper.ProductMapper;
+import com.kodilla.ecommercee.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/products")
 public class ProductController {
-
-    List<ProductDto> testProductList = new ArrayList<ProductDto>() {
-        {
-            add(new ProductDto(1L, "kurtka zimowa", "Pellentesque(...)", new BigDecimal(100), 1L));
-            add(new ProductDto(2L, "płaszcz", "Pellentesque(...)", new BigDecimal(150), 1L));
-            add(new ProductDto(3L, "buty", "Pellentesque(...)", new BigDecimal(100), 4L));
-            add(new ProductDto(4L, "rękawiczki", "Pellentesque(...)", new BigDecimal(50), 2L));
-        }
-    };
+    @Autowired
+    ProductService productService;
+    @Autowired
+    ProductMapper productMapper;
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getProducts() {
-        return ResponseEntity.ok(testProductList);
+        List<Product> productList = productService.getAllProducts();
+        return ResponseEntity.ok(productMapper.mapToProductDtoList(productList));
     }
-
     @GetMapping("{productId}")
-    public ResponseEntity<ProductDto> getProduct(@PathVariable Long productId) {
-        for (ProductDto product : testProductList) {
-            if (product.getId().equals(productId)) {
-                return ResponseEntity.ok(product);
-            }
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<ProductDto> getProduct(@PathVariable Long productId) throws ProductNotFoundException {
+        return ResponseEntity.ok(productMapper.mapToProductDto(productService.getProduct(productId)));
     }
-
     @DeleteMapping(value = "{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
-        for (ProductDto product : testProductList) {
-            if (product.getId().equals(productId)) {
-                testProductList.remove(product);
-                return ResponseEntity.ok().build();
-            }
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createProduct(@RequestBody ProductDto productDto) {
-        testProductList.add(productDto);
-
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) throws ProductNotFoundException {
+        productService.deleteById(productId);
         return ResponseEntity.ok().build();
     }
-
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createProduct(@RequestBody ProductDto productDto) {
+        Product product = productMapper.mapToProduct(productDto);
+        productService.saveProduct(product);
+        return ResponseEntity.ok().build();
+    }
+    @PatchMapping(path = "{productToUpdateId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long productToUpdateId, @RequestBody ProductDto updatedProductDto) throws ProductNotFoundException {
+        productService.checkIfProductExists(productToUpdateId);
+        Product productToUpdate = productMapper.mapToProduct(updatedProductDto);
+        productService.saveProduct(productToUpdate);
+        return ResponseEntity.ok(productMapper.mapToProductDto(productToUpdate));
+    }
     @PutMapping(path = "{productId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long productId, @RequestBody ProductDto productNew) {
-        for (ProductDto product : testProductList) {
-            if (product.getId().equals(productId)) {
-                testProductList.remove(product);
-                testProductList.add(productNew);
-                return ResponseEntity.ok(productNew);
-            }
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<ProductDto> updateAndNewProduct(@PathVariable Long productId, @RequestBody ProductDto newProductDto) throws ProductNotFoundException {
+        productService.checkIfProductExists(productId);
+        productService.deleteById(productId);
+        Product newProduct = productMapper.mapToProduct(newProductDto);
+        productService.saveProduct(newProduct);
+        return ResponseEntity.ok(productMapper.mapToProductDto(newProduct));
     }
 }

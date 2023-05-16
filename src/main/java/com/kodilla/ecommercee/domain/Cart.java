@@ -26,11 +26,18 @@ public class Cart {
 
     @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
     private Order order;
-
     @OneToMany(
             cascade = CascadeType.PERSIST,
             targetEntity =  CartProducts.class,
             fetch = FetchType.LAZY,
             mappedBy = "cart")
     private List<CartProducts> cartProducts;
+
+    public Cart(User user, List<CartProducts> cartProducts) {
+        this.user = user;
+        this.cartProducts = cartProducts;
+    }
+
+
 }
+
