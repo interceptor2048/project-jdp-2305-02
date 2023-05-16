@@ -23,16 +23,16 @@ public class GroupService {
         return groupRepository.findAll();
     }
 
-    public Group getGroup(final Long id) throws GroupNotFoundException {
+    public Group getGroup(final Long id) {
         return groupRepository.findById(id).orElseThrow(GroupNotFoundException::new);
     }
 
-    public void deleteGroup(final Long id) throws GroupNotFoundException {
+    public void deleteGroup(final Long id) {
         groupRepository.findById(id).orElseThrow(GroupNotFoundException::new);
         groupRepository.deleteById(id);
     }
 
-    public Group updateGroup(final Long id, String name) throws GroupNotFoundException {
+    public Group updateGroup(final Long id, String name) {
         Group toUpdate = groupRepository.findById(id).orElseThrow(GroupNotFoundException::new);
         toUpdate.setName(name);
         return groupRepository.save(toUpdate);
