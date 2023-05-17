@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    @Autowired
     private final ProductRepository repository;
 
     public List<Product> getAllProducts() {

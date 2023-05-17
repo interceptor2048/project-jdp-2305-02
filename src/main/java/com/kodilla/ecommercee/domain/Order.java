@@ -20,7 +20,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus orderStatus;
-    @OneToOne()
+    @OneToOne
     private Cart cart;
     @ManyToOne
     private User user;
