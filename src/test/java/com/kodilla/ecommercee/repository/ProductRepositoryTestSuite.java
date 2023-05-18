@@ -1,6 +1,6 @@
-package com.kodilla.ecommercee.domain;
+package com.kodilla.ecommercee.repository;
 
-import com.kodilla.ecommercee.repository.ProductRepository;
+import com.kodilla.ecommercee.domain.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
