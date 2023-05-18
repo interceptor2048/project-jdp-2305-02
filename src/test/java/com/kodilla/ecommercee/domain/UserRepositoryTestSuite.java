@@ -3,6 +3,7 @@ package com.kodilla.ecommercee.domain;
 import com.kodilla.ecommercee.domain.User;
 import com.kodilla.ecommercee.repository.UserRepository;
 
+
 import org.junit.jupiter.api.Assertions;
 
 import org.junit.jupiter.api.Test;

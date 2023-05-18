@@ -30,7 +30,7 @@ public class CartProducts {
 
     @Column(name = "quantity")
     private int quantity;
+
     @ManyToOne
     private Order order;
-
 }
