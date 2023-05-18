@@ -1,4 +1,4 @@
-package com.kodilla.ecommercee.repository;
+package com.kodilla.ecommercee.domain;
 
 import com.kodilla.ecommercee.domain.User;
 import com.kodilla.ecommercee.repository.UserRepository;
