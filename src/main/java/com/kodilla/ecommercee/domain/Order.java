@@ -26,8 +26,8 @@ public class Order {
     private User user;
 
     @ManyToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "order")
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "ORDER_PRODUCTS")
     private List<Product> cartProducts;
 
     public Order(Long orderId, OrderStatus orderStatus) {

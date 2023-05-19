@@ -22,14 +22,9 @@ public class CartService {
 
     private final OrderService orderService;
 
-    private final ProductMapper productMapper;
     private final UserRepository userRepository;
-    private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
-
-    public Cart getCartById(Long cartId) {
-        return cartRepository.findById(cartId).orElse(new Cart());
-    }
+    private final OrderRepository orderRepository;
 
     public Cart save(final Cart cart) {
         return cartRepository.save(cart);
@@ -45,9 +40,9 @@ public class CartService {
         userRepository.save(user);
     }
 
-    public List<Product> getUserCart(Long userId) {
+    public Cart getUserCart(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        return user.getCart().getCartProducts();
+        return user.getCart();
     }
 
     public void addItemToCart(Long userId, Long productId) {
@@ -66,7 +61,11 @@ public class CartService {
 
     public void createOrder(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        OrderDto orderDto = new OrderDto(1L,userId,user.getCart().getId(),OrderStatus.CREATED);
-        orderService.createOrder(orderDto);
+        Order order = new Order();
+        order.setUser(user);
+        order.setCart(user.getCart());
+        order.setOrderStatus(OrderStatus.CREATED);
+        orderRepository.save(order);
+        createEmptyCart(userId);
     }
 }

@@ -1,46 +1,46 @@
 package com.kodilla.ecommercee.mapper;
 
 import com.kodilla.ecommercee.domain.Cart;
+import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.domain.Order;
 import com.kodilla.ecommercee.domain.User;
+import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.service.OrderService;
 import com.kodilla.ecommercee.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
 public class CartMapper {
-
-    @Autowired
-    OrderService orderDbService;
-
-    @Autowired
-    UserService userDbService;
+    private final ProductMapper productMapper;
+    private final OrderService orderDbService;
+    private final UserService userDbService;
 
 
     public CartDto mapToCartDto(final Cart cart) {
         return new CartDto(
+                cart.getUser().getId(),
                 cart.getId(),
-                getIdFromUser(cart),
-                getIdFromOrder(cart)
+                cart.getOrder().getOrderId(),
+                productMapper.mapToProductDtoList(cart.getCartProducts())
         );
     }
 
-
-    private Long getIdFromUser(Cart cart) {
-        try {
-            return cart.getUser().getId();
-        } catch (Exception e) {
-            return null;
-        }
+    public Cart mapToCart(CartDto cartDto) {
+        return new Cart(
+                cartDto.getCartId(),
+                userDbService.getUser(cartDto.getUserId()),
+                orderDbService.getOrder(cartDto.getOrderId()),
+                productMapper.mapToProductList(cartDto.getProductDtoList()));
     }
 
-    private Long getIdFromOrder(Cart cart) {
-        try {
-            return cart.getOrder().getOrderId();
-        } catch (Exception e) {
-            return null;
-        }
+    public List<ProductDto> mapToCartDtoProducts(Cart cart) {
+        return productMapper.mapToProductDtoList(cart.getCartProducts());
     }
+
 }

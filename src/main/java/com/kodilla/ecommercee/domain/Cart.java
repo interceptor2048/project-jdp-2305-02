@@ -23,7 +23,6 @@ public class Cart {
     @OneToOne(mappedBy = "cart")
     @JoinColumn(name = "userId")
     private User user;
-
     @OneToOne(mappedBy = "cart")
     private Order order;
     @ManyToMany(fetch = FetchType.LAZY)

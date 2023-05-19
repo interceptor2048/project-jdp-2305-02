@@ -1,6 +1,7 @@
 package com.kodilla.ecommercee.controller;
 
 
+import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.mapper.ProductMapper;
@@ -18,7 +19,8 @@ import java.util.List;
 @CrossOrigin("*")
 public class CartController {
     private final CartService cartDbService;
-    private final ProductMapper productMapper;
+    private final CartMapper cartMapper;
+
 
 
     @PostMapping("{userId}")
@@ -28,7 +30,7 @@ public class CartController {
 
     @GetMapping("{userId}")
     public List<ProductDto> getCart(@PathVariable("userId") Long userId) {
-        return productMapper.mapToProductDtoList(cartDbService.getUserCart(userId));
+        return cartMapper.mapToCartDtoProducts(cartDbService.getUserCart(userId));
     }
 
     @PutMapping("{userId}/{productId}")
