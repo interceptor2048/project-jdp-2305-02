@@ -30,12 +30,9 @@ public class Product {
     private BigDecimal price;
     @ManyToMany
     private List<Order> order;
-
-//    TODO: when Group entity implemented
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "groupId")a
-//    private Group group;
-
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "groupId")
+    private Group group;
     @ManyToMany
     private List<Cart> carts;
 
@@ -50,5 +47,12 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public Product(String name, String description, BigDecimal price, Group group) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.group = group;
     }
 }
