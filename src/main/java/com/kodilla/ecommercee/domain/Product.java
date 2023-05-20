@@ -27,11 +27,11 @@ public class Product {
     private String description;
     @Column
     private BigDecimal price;
-    @ManyToMany
-    private List<Order> order;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "groupId")
     private Group group;
+    @ManyToMany
+    private List<Order> order;
     @ManyToMany
     private List<Cart> carts;
 

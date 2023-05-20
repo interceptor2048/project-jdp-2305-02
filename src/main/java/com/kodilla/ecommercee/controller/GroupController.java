@@ -4,6 +4,8 @@ import com.kodilla.ecommercee.dto.GroupDto;
 import com.kodilla.ecommercee.exception.GroupNotFoundException;
 import com.kodilla.ecommercee.mapper.GroupMapper;
 import com.kodilla.ecommercee.service.GroupService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/groups")
+@RequestMapping("/groupsentity")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class GroupController {
-
-    private GroupService groupService;
-    private GroupMapper groupMapper;
+    private final GroupService groupService;
+    private final GroupMapper groupMapper;
 
     @GetMapping
     public ResponseEntity<List<GroupDto>> getGroups(){
@@ -24,13 +26,13 @@ public class GroupController {
     }
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<GroupDto> getGroup(@PathVariable Long groupId) throws GroupNotFoundException {
-        return ResponseEntity.ok(groupMapper.mapToGroupDto(groupService.getGroup(groupId)));
+    public ResponseEntity<GroupDto> getGroup(@PathVariable Long id) throws GroupNotFoundException {
+        return ResponseEntity.ok(groupMapper.mapToGroupDto(groupService.getGroup(id)));
     }
 
     @DeleteMapping(value = "{id}")
-    public ResponseEntity<Void> deleteGroup(@PathVariable Long groupId) throws GroupNotFoundException {
-        groupService.deleteGroup(groupId);
+    public ResponseEntity<Void> deleteGroup(@PathVariable Long id) throws GroupNotFoundException {
+        groupService.deleteGroup(id);
         return ResponseEntity.ok().build();
     }
 

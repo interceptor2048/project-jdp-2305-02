@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity(name = "groups")
+@Entity(name = "groupsentity")
 public class Group {
     @Id
     @GeneratedValue
