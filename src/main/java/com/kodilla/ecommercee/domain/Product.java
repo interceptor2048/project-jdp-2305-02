@@ -20,7 +20,6 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue
-    @Column(unique = true)
     private Long id;
     @Column
     private String name;
