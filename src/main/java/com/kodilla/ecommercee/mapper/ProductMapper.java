@@ -22,6 +22,7 @@ public class ProductMapper {
                 groupRepository.findById(productDto.getGroupId()).orElseThrow(GroupNotFoundException::new)
         );
     }
+
     public ProductDto mapToProductDto(final Product product) {
         return new ProductDto(
                 product.getId(),
@@ -31,9 +32,14 @@ public class ProductMapper {
                 product.getGroup().getId()
         );
     }
+
     public List<ProductDto> mapToProductDtoList(final List<Product> productList) {
         return productList.stream()
                 .map(this::mapToProductDto)
                 .collect(Collectors.toList());
+    }
+
+    public List<Product> mapToProductList(final List<ProductDto> productDtoList) {
+        return productDtoList.stream().map(this::mapToProduct).collect(Collectors.toList());
     }
 }

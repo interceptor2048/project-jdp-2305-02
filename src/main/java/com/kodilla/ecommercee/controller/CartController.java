@@ -1,4 +1,5 @@
 package com.kodilla.ecommercee.controller;
+import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.exception.UserNotFoundException;
 import com.kodilla.ecommercee.mapper.ProductMapper;
@@ -13,7 +14,8 @@ import java.util.List;
 @CrossOrigin("*")
 public class CartController {
     private final CartService cartDbService;
-    private final ProductMapper productMapper;
+    private final CartMapper cartMapper;
+
 
     @PostMapping("{userId}")
     public void createEmptyCart(@PathVariable("userId") Long userId) {
@@ -34,7 +36,7 @@ public class CartController {
     public void deleteItemFromCart(@PathVariable("userId") Long userId, @PathVariable("productId") Long productId) throws UserNotFoundException {
         cartDbService.deleteItemFromCart(userId, productId);
     }
-
+  
     @PostMapping("/createOrder/{userId}")
     public void createOrder(@PathVariable Long userId) throws UserNotFoundException {
         cartDbService.createOrder(userId);

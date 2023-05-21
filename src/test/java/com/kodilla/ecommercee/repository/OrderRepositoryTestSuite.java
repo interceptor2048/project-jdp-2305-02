@@ -1,5 +1,7 @@
-package com.kodilla.ecommercee.domain;
+package com.kodilla.ecommercee.repository;
 
+import com.kodilla.ecommercee.domain.Order;
+import com.kodilla.ecommercee.domain.OrderStatus;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;

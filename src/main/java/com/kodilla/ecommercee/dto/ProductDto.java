@@ -1,7 +1,5 @@
 package com.kodilla.ecommercee.dto;
-
 import lombok.*;
-
 import java.math.BigDecimal;
 
 @Data

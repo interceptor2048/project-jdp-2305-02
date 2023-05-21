@@ -1,6 +1,5 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.exception.ProductNotFoundException;
 import org.junit.jupiter.api.AfterEach;
