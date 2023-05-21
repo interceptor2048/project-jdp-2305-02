@@ -4,7 +4,6 @@ import com.kodilla.ecommercee.dto.GroupDto;
 import com.kodilla.ecommercee.exception.GroupNotFoundException;
 import com.kodilla.ecommercee.mapper.GroupMapper;
 import com.kodilla.ecommercee.service.GroupService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

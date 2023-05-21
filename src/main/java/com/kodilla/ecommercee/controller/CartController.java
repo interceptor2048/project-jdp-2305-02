@@ -1,6 +1,4 @@
 package com.kodilla.ecommercee.controller;
-
-
 import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.mapper.CartMapper;
@@ -42,7 +40,6 @@ public class CartController {
     public void deleteItemFromCart(@PathVariable("userId") Long userId, @PathVariable("productId") Long productId){
         cartDbService.deleteItemFromCart(userId, productId);
     }
-
     @PostMapping("/{userId}/createOrder")
     public void createOrder(@PathVariable Long userId) {
         cartDbService.createOrder(userId);

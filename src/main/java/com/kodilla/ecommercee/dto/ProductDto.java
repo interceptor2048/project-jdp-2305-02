@@ -3,7 +3,7 @@ package com.kodilla.ecommercee.dto;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
+
 
 @Data
 @NoArgsConstructor

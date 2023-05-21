@@ -1,10 +1,8 @@
 package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.domain.*;
-import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.exception.ProductNotFoundException;
 import com.kodilla.ecommercee.exception.UserNotFoundException;
-import com.kodilla.ecommercee.mapper.ProductMapper;
 import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.OrderRepository;
 import com.kodilla.ecommercee.repository.ProductRepository;
@@ -12,16 +10,13 @@ import com.kodilla.ecommercee.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
 
     private final CartRepository cartRepository;
-
-    private final OrderService orderService;
-
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
