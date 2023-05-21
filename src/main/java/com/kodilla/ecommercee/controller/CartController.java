@@ -2,10 +2,8 @@ package com.kodilla.ecommercee.controller;
 
 
 import com.kodilla.ecommercee.dto.ProductDto;
-import com.kodilla.ecommercee.mapper.CartMapper;
 import com.kodilla.ecommercee.mapper.ProductMapper;
 import com.kodilla.ecommercee.service.CartService;
-import com.kodilla.ecommercee.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

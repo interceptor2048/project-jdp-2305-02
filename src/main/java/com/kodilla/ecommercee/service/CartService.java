@@ -21,10 +21,7 @@ public class CartService {
     private final CartRepository cartRepository;
 
     private final OrderService orderService;
-
-    private final ProductMapper productMapper;
     private final UserRepository userRepository;
-    private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
 
     public Cart getCartById(Long cartId) {
@@ -38,7 +35,6 @@ public class CartService {
     public void createEmptyCart(Long userId) {
         Cart emptyCart = new Cart();
         Cart cart = cartRepository.save(emptyCart);
-
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         cart.setUser(user);
         user.setCart(cart);

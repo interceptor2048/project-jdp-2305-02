@@ -1,7 +1,6 @@
 package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.domain.Order;
-import com.kodilla.ecommercee.domain.OrderStatus;
 import com.kodilla.ecommercee.dto.OrderDto;
 import com.kodilla.ecommercee.exception.OrderNotFoundException;
 import com.kodilla.ecommercee.mapper.OrderMapper;
@@ -10,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -2,8 +2,6 @@ package com.kodilla.ecommercee.mapper;
 
 import com.kodilla.ecommercee.domain.Cart;
 import com.kodilla.ecommercee.dto.CartDto;
-import com.kodilla.ecommercee.domain.Order;
-import com.kodilla.ecommercee.domain.User;
 import com.kodilla.ecommercee.service.OrderService;
 import com.kodilla.ecommercee.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
