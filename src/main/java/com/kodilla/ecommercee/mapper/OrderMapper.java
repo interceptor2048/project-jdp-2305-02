@@ -23,7 +23,7 @@ public class OrderMapper {
                 orderDto.getOrderId(),
                 orderDto.getOrderStatus(),
                 cartRepository.findById(orderDto.getCartId()).orElseThrow(() -> new RuntimeException("cart not found")),
-                userRepository.findById(orderDto.getUserId()).orElseThrow(() -> new RuntimeException("user notfound")),
+                userRepository.findById(orderDto.getUserId()).orElseThrow(() -> new RuntimeException("user not found")),
                 cartRepository.findById(orderDto.getCartId()).orElseThrow(() -> new RuntimeException("cart not found")).getCartProducts()
         );
     }

@@ -1,8 +1,11 @@
 package com.kodilla.ecommercee.controller;
 
+import com.kodilla.ecommercee.domain.Cart;
 import com.kodilla.ecommercee.domain.Order;
 import com.kodilla.ecommercee.dto.OrderDto;
+import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.mapper.OrderMapper;
+import com.kodilla.ecommercee.mapper.ProductMapper;
 import com.kodilla.ecommercee.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,6 +22,8 @@ public class OrderController {
 
     private final OrderService orderService;
     private final OrderMapper orderMapper;
+
+    private final ProductMapper productMapper;
 
     @GetMapping
     public ResponseEntity<List<OrderDto>> getOrders() {
@@ -49,6 +54,14 @@ public class OrderController {
     public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
         orderService.deleteOrder(orderId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("{orderId}/products")
+    public ResponseEntity<List<ProductDto>> getOrderProducts(@PathVariable Long orderId) {
+        Order orderToGetProducts = orderService.getOrder(orderId);
+        Cart cart = orderToGetProducts.getCart();
+        return ResponseEntity.ok(productMapper.mapToProductDtoList(cart.getCartProducts()));
+
     }
 
 

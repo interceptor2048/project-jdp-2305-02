@@ -15,28 +15,16 @@ import java.util.List;
 @Entity(name = "carts")
 public class Cart {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "cartId", unique = true)
-    private Long id;
 
-    @OneToOne(mappedBy = "cart", cascade = CascadeType.PERSIST)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne(mappedBy = "cart")
     @JoinColumn(name = "userId")
     private User user;
-
-    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "cart")
     private Order order;
-    @OneToMany(
-            cascade = CascadeType.PERSIST,
-            targetEntity =  CartProducts.class,
-            fetch = FetchType.LAZY,
-            mappedBy = "cart")
-    private List<CartProducts> cartProducts;
-
-    public Cart(User user, List<CartProducts> cartProducts) {
-        this.user = user;
-        this.cartProducts = cartProducts;
-    }
-
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "CART_PRODUCTS")
+    private List<Product> cartProducts;
 }
