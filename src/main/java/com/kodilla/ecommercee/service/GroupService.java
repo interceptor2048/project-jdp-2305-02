@@ -11,7 +11,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GroupService {
-
     private final GroupRepository groupRepository;
 
     public void createGroup(Group group) {
