@@ -35,7 +35,7 @@ public class CartController {
         cartDbService.deleteItemFromCart(userId, productId);
     }
 
-    @PostMapping("/{userId}/createOrder")
+    @PostMapping("/createOrder/{userId}")
     public void createOrder(@PathVariable Long userId) throws UserNotFoundException {
         cartDbService.createOrder(userId);
     }

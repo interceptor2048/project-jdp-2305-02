@@ -32,9 +32,4 @@ public class Order {
         this.orderId = orderId;
         this.orderStatus = orderStatus;
     }
-
-    public Order(OrderStatus orderStatus, Cart cart, User user) {
-        this.orderStatus = orderStatus;
-        this.cart = cart;
-    }
 }
