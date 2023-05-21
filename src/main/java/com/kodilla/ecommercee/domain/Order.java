@@ -20,16 +20,15 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus orderStatus;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Cart cart;
     @ManyToOne
     private User user;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "order",
-            cascade = CascadeType.ALL)
-    private List<CartProducts> cartProducts;
+    @ManyToMany(
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "ORDER_PRODUCTS")
+    private List<Product> cartProducts;
 
     public Order(Long orderId, OrderStatus orderStatus) {
         this.orderId = orderId;

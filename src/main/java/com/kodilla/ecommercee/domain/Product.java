@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
-@Entity (name = "products")
+@Entity(name = "products")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,12 +25,24 @@ public class Product {
     private String description;
     @Column
     private BigDecimal price;
+    @ManyToMany
+    private List<Order> order;
 
 //    TODO: when Group entity implemented
 //    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "groupId")
+//    @JoinColumn(name = "groupId")a
 //    private Group group;
-    
+
+    @ManyToMany
+    private List<Cart> carts;
+
+    public Product(Long id, String name, String description, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
     public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
