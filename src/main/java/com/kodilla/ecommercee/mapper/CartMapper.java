@@ -1,8 +1,10 @@
 package com.kodilla.ecommercee.mapper;
 import com.kodilla.ecommercee.domain.Cart;
 import com.kodilla.ecommercee.dto.CartDto;
+import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.service.OrderService;
 import com.kodilla.ecommercee.service.UserService;
+import com.kodilla.ecommercee.controller.CartController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
