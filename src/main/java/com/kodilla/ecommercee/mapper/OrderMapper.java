@@ -5,18 +5,14 @@ import com.kodilla.ecommercee.repository.CartRepository;
 import com.kodilla.ecommercee.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class OrderMapper {
-
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
-
 
     public Order mapToOrder(final OrderDto orderDto) {
         return new Order(

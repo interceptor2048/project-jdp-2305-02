@@ -4,13 +4,11 @@ import com.kodilla.ecommercee.domain.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class ItemDto {
 
     private Long itemId;
