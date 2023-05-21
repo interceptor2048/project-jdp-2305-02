@@ -2,20 +2,22 @@ package com.kodilla.ecommercee.controller;
 import com.kodilla.ecommercee.dto.CartDto;
 import com.kodilla.ecommercee.dto.ProductDto;
 import com.kodilla.ecommercee.exception.UserNotFoundException;
-import com.kodilla.ecommercee.mapper.ProductMapper;
 import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.mapper.ProductMapper;
 import com.kodilla.ecommercee.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RequiredArgsConstructor
+
 @RestController
 @RequestMapping("/cart")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class CartController {
     private final CartService cartDbService;
     private final CartMapper cartMapper;
+    private final CartMapper productMapper;
 
 
     @PostMapping("{userId}")
@@ -25,7 +27,7 @@ public class CartController {
 
     @GetMapping("{userId}")
     public List<ProductDto> getCart(@PathVariable("userId") Long userId) throws UserNotFoundException {
-        return productMapper.mapToProductDtoList(cartDbService.getUserCart(userId));
+        return productMapper.mapToCartDtoProducts(cartDbService.getUserCart(userId));
     }
 
     @PutMapping("{userId}/{productId}")
