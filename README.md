@@ -32,6 +32,26 @@ Project uses Gradle tool and Spring/ hibernate to build.
 
 #### Cart
 
+* `/cart/{userId}`
+
+GET method -> shows cart of specified user.
+
+* `/cart/{userId}`
+
+POST method -> creates empty cart for specified user.
+
+* `/{userId}/{productId}`
+
+PUT method -> adds product to cart of specified user.
+
+* `/{userId}/{productId}`
+
+DELETE method -> removes product from cart of specified user.
+
+* `/createOrder/{userId}`
+
+POST method -> creates an order from cart of specified user.
+
 #### Group
 
 * `//groupsentity`
