@@ -91,6 +91,10 @@ POST method -> create a new order, pass values into json request body ex.:
 
 GET method -> returns a order with a specific id, values: orderId.
 
+* `/{orderId}/products`
+
+GET method -> returns list of products included in order with a specific id, values: orderId.
+
 * `/orders/{orderId}`
 
 PATCH method -> updates the order, pass values into json request body ex.:
