@@ -38,7 +38,7 @@ Project uses Gradle tool and Spring/ hibernate to build.
 
 GET method -> shows all groups, no values.
 
-* `/groups/{id}`
+* `/groupsentity/{id}`
 
 GET method -> returns a group with a specific id.
 
