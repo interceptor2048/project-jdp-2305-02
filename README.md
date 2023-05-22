@@ -213,3 +213,9 @@ PATCH method -> generate key(token) for user with specific id valid 1 hour, valu
 ### What can the project be used for?
 
 This project is most simplified backend layer of generic online store. It can be developed further, for specific User requirements.
+
+
+### Troubleshooting
+
+It is noted, that can appear problem with testing using H2/ Gradle/ Hibernate utilities. Can be solved by addon "DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_ON_EXIT=FALSE" to url in application.properties in "test" package.
+
