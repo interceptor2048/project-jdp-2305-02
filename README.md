@@ -57,7 +57,7 @@ PUT method -> updates a group with specific id, pass values into json request bo
 }
 ```
 
-* `/groups`
+* `/groupsentity`
 
 POST method -> create a new group, pass values into json request body ex.:
 
