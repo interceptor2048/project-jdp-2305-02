@@ -42,7 +42,7 @@ GET method -> shows all groups, no values.
 
 GET method -> returns a group with a specific id.
 
-* `/groups/{id}`
+* `/groupsentity/{id}`
 
 DELETE method -> deletes a group with a specific id.
 
