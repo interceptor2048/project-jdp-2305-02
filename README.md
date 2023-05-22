@@ -219,7 +219,16 @@ POST method -> create a new user, pass values into json request body ex.:
   "userKey": 59403,
   "keyExpirationTime": "2023-05-18T18:42:39.827Z"
 }
-```
+
+or
+
+{
+  "id": 1,
+  "username": "Piotr",
+  "status": 1,
+  "userKey": 59403
+}
+
 
 * `/users/switchBlockade/{id}`
 
