@@ -46,7 +46,7 @@ GET method -> returns a group with a specific id.
 
 DELETE method -> deletes a group with a specific id.
 
-* `/groups/{id}`
+* `/groupsentity/{id}`
 
 PUT method -> updates a group with specific id, pass values into json request body ex.:
 
