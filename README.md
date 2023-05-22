@@ -34,7 +34,7 @@ Project uses Gradle tool and Spring/ hibernate to build.
 
 #### Group
 
-* `/groups`
+* `//groupsentity`
 
 GET method -> shows all groups, no values.
 
