@@ -228,6 +228,7 @@ or
   "status": 1,
   "userKey": 59403
 }
+```
 
 
 * `/users/switchBlockade/{id}`
