@@ -54,7 +54,7 @@ POST method -> creates an order from cart of specified user.
 
 #### Group
 
-* `//groupsentity`
+* `/groupsentity`
 
 GET method -> shows all groups, no values.
 
