@@ -1,7 +1,5 @@
 package com.kodilla.ecommercee.domain;
-
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -33,10 +31,5 @@ public class Order {
     public Order(Long orderId, OrderStatus orderStatus) {
         this.orderId = orderId;
         this.orderStatus = orderStatus;
-    }
-
-    public Order(OrderStatus orderStatus, Cart cart, User user) {
-        this.orderStatus = orderStatus;
-        this.cart = cart;
     }
 }

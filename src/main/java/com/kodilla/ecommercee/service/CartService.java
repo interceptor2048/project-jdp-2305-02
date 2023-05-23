@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CartService {
-
     private final CartRepository cartRepository;
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
@@ -28,7 +27,6 @@ public class CartService {
     public void createEmptyCart(Long userId) {
         Cart emptyCart = new Cart();
         Cart cart = cartRepository.save(emptyCart);
-
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         cart.setUser(user);
         user.setCart(cart);
