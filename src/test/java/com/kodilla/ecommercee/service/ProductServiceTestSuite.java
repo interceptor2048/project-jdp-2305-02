@@ -1,11 +1,9 @@
 package com.kodilla.ecommercee.service;
 
-import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.domain.Product;
+import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.exception.ProductNotFoundException;
-import com.kodilla.ecommercee.repository.GroupRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +22,8 @@ class ProductServiceTestSuite {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    GroupService groupService;
 
     private static Long id1;
     private static Long id2;
@@ -132,5 +132,59 @@ class ProductServiceTestSuite {
 
         //Then
         assertThrows(ProductNotFoundException.class, () -> productService.getProduct(id5));
+    }
+    @Test
+    void testSaveProductWithGroup() {
+        //Given
+        Group group = new Group(null, "test group to check save");
+        Product product6 = new Product(
+                "testSaveProductWithGroup",
+                "product desc. testing delete method",
+                new BigDecimal(300),
+                group
+        );
+        productService.saveProduct(product6);
+        Long id6 = product6.getId();
+        Long groupId = group.getId();
+
+        //When & Then
+        assertEquals("testSaveProductWithGroup", productService.getProduct(id6).getName());
+        assertEquals("test group to check save", groupService.getGroup(groupId).getName());
+
+        //CleanUp
+        productService.deleteById(id6);
+    }
+    @Test
+    void testDeleteProductAndNotToDeleteGroup() {
+        //Given
+        Group group = new Group(null, "test group to check not deleting");
+        Product product7 = new Product(
+                "testDeleteProductAndNotToDeleteGroup",
+                "product desc. testing delete method",
+                new BigDecimal(300),
+                group
+        );
+        productService.saveProduct(product7);
+        Long id7 = product7.getId();
+        Long groupId = group.getId();
+
+        //When
+        productService.deleteById(id7);
+
+        //Then
+        assertThrows(ProductNotFoundException.class, () -> productService.getProduct(id7));
+        assertEquals("test group to check not deleting", groupService.getGroup(groupId).getName());
+
+        //CleanUp
+        try {
+            productService.deleteById(id7);
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
+        try {
+            groupService.deleteGroup(groupId);
+        } catch (Exception e) {
+            System.out.println("Exception: " + e);
+        }
     }
 }

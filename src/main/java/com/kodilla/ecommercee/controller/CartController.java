@@ -1,71 +1,47 @@
 package com.kodilla.ecommercee.controller;
-
-
 import com.kodilla.ecommercee.dto.CartDto;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import com.kodilla.ecommercee.dto.ProductDto;
+import com.kodilla.ecommercee.exception.UserNotFoundException;
+import com.kodilla.ecommercee.mapper.CartMapper;
+import com.kodilla.ecommercee.mapper.ProductMapper;
+import com.kodilla.ecommercee.service.CartService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
+
 @RestController
+@RequestMapping("/cart")
 @CrossOrigin("*")
-@RequestMapping("/carts")
+@RequiredArgsConstructor
 public class CartController {
+    private final CartService cartDbService;
+    private final CartMapper cartMapper;
+    private final CartMapper productMapper;
 
-    List<CartDto> CartDtoList = new ArrayList<CartDto>(){
-        {
-            add(new CartDto(1L, "kurtka zimowa", "Pellentesque tempus interdum quam ut rhoncus. Donec...", new BigDecimal(100), 1L));
-            add(new CartDto(2L, "płaszcz", "Pellentesque tempus interdum quam ut rhoncus. Donec...", new BigDecimal(150), 1L));
-            add(new CartDto(8L,"krawat", "Pellentesque tempus interdum quam ut rhoncus. Donec...", new BigDecimal(50), 2L));
 
-        }
-    };
-
-    @GetMapping
-    public ResponseEntity<List<CartDto>> getCart(){
-        return ResponseEntity.ok(CartDtoList);
+    @PostMapping("{userId}")
+    public void createEmptyCart(@PathVariable("userId") Long userId) {
+        cartDbService.createEmptyCart(userId);
     }
 
-    @GetMapping(value = "{cartId}")
-    public ResponseEntity<CartDto> getCart(@PathVariable Long cartId){
-        for (CartDto cart : CartDtoList) {
-            if (cart.getId().equals(cartId)){
-                return ResponseEntity.ok(cart);
-            }
-        }
-        return ResponseEntity.notFound().build();
+    @GetMapping("{userId}")
+    public List<ProductDto> getCart(@PathVariable("userId") Long userId) throws UserNotFoundException {
+        return productMapper.mapToCartDtoProducts(cartDbService.getUserCart(userId));
     }
 
-    @DeleteMapping(value = "{cartId}")
-    public ResponseEntity<Void> deleteCart(@PathVariable Long cartId) {
-        for (CartDto cart : CartDtoList) {
-            if (cart.getId().equals(cartId)){
-                CartDtoList.remove(cart);
-                return ResponseEntity.ok().build();
-            }
-        }
-        return ResponseEntity.notFound().build();
+    @PutMapping("{userId}/{productId}")
+    public void addItemToCart(@PathVariable("userId") Long userId, @PathVariable Long productId) throws UserNotFoundException {
+        cartDbService.addItemToCart(userId, productId);
     }
 
-    @PutMapping(path="{cartId}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CartDto> updateCart(@PathVariable Long cartId, @RequestBody CartDto cartDto) {
-        for (CartDto cart : CartDtoList) {
-            if (cart.getId().equals(cartId)) {
-                CartDtoList.remove(cart);
-                CartDtoList.add(cartDto);
-                return ResponseEntity.ok(cartDto);
-            }
-        }
-        return ResponseEntity.notFound().build();
+    @DeleteMapping("{userId}/{productId}")
+    public void deleteItemFromCart(@PathVariable("userId") Long userId, @PathVariable("productId") Long productId) throws UserNotFoundException {
+        cartDbService.deleteItemFromCart(userId, productId);
     }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createCart(@RequestBody CartDto cartDto) {
-        CartDtoList.add(cartDto);
-        return ResponseEntity.ok().build();
+  
+    @PostMapping("/createOrder/{userId}")
+    public void createOrder(@PathVariable Long userId) throws UserNotFoundException {
+        cartDbService.createOrder(userId);
     }
 }

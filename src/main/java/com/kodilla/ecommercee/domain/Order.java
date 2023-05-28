@@ -1,7 +1,5 @@
 package com.kodilla.ecommercee.domain;
-
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,24 +18,18 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column
     private OrderStatus orderStatus;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Cart cart;
     @ManyToOne
     private User user;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "order",
-            cascade = CascadeType.ALL)
-    private List<CartProducts> cartProducts;
+    @ManyToMany(
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "ORDER_PRODUCTS")
+    private List<Product> cartProducts;
 
     public Order(Long orderId, OrderStatus orderStatus) {
         this.orderId = orderId;
         this.orderStatus = orderStatus;
-    }
-
-    public Order(OrderStatus orderStatus, Cart cart, User user) {
-        this.orderStatus = orderStatus;
-        this.cart = cart;
     }
 }
