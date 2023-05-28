@@ -247,5 +247,4 @@ This project is most simplified backend layer of generic online store. It can be
 
 ### Troubleshooting
 
-It is noted, that can appear problem with testing using H2/ Gradle/ Hibernate utilities. Can be solved by addon ";DB_CLOSE_ON_EXIT=FALSE" to url in application.properties in "test" package.
-
+We are not aware of any issues at this stage
